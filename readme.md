@@ -1,10 +1,9 @@
 # Customer Segmentation Analysis Using RFM | Python & Power BI
 
-![Front Page](FrontPage.png)
 
-![Dashboard 1](Dashboard2.png)
+![Dashboard 1](Dashboard1.png)
 
-![Dashboard 2](Dashboard1.png)
+![Dashboard 2](Dashboard2.png)
 
 ---
 
