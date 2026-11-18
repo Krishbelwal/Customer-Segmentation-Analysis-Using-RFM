@@ -163,36 +163,173 @@ Added interactive slicers to enable dynamic dashboard filtering:
 
 The following insights were derived from the RFM customer segmentation analysis and Power BI dashboard.
 
-### Insight 1: Customer Segmentation Distribution
+# Customer Segmentation Analysis Using RFM | Python & Power BI
 
-- **Insight:** The Inactive segment accounts for the largest proportion of customers (42.82%), indicating a significant opportunity for customer reactivation. Meanwhile, the Premium segment consists of only 113 customers, highlighting the importance of retaining high-value customers.
-- **Business Recommendation:** Implement targeted reactivation campaigns for Inactive customers and introduce exclusive loyalty benefits to retain Premium customers and strengthen long-term customer relationships.
+## 1. Situation
 
-### Insight 2: At-Risk Customer Analysis
+I worked on a Customer Segmentation Analysis project using Python and Power BI.
 
-- **Insight:** The analysis identified 6 At-Risk customers with monetary values ranging from approximately ₹14K to ₹55K. Their recency values indicate varying periods of purchase inactivity, suggesting a potential risk of declining customer engagement despite their historical spending.
-- **Business Recommendation:** Prioritize high-spending At-Risk customers for personalized win-back campaigns, exclusive offers, and targeted communication to encourage repeat purchases and reduce the risk of losing valuable customers.
+In this project, I worked with a retail company's customer transaction data to understand customer purchasing behavior.
 
-### Insight 3: Revenue Contribution Across Customer Segments
+The main objective was to understand which customers were generating the most revenue, which customers were purchasing frequently, and which customers had stopped purchasing or were becoming inactive.
 
-- **Insight:** The Premium segment generates the highest revenue (approximately ₹5.9M) despite having only 113 customers, highlighting its significant contribution to overall business revenue.
-- **Business Recommendation:** Focus on retaining Premium customers through personalized experiences, exclusive rewards, and loyalty programs while identifying opportunities to develop other customer segments into higher-value groups.
+I wanted to use this analysis to identify valuable customers, understand different purchasing patterns, and find opportunities to improve customer retention and loyalty.
 
-### Insight 4: Product Preferences Across Customer Segments
+## 2. Task
 
-- **Insight:** Regular, Potential, and Inactive customers primarily purchased the *White Hanging Heart T-Light Holder*. Premium customers showed a preference for the *Regency Cakestand 3 Tier*, At-Risk customers for the *Wooden Frame Antique White*, and Loyal customers for the *Small Popcorn Holder*.
-- **Business Recommendation:** Develop segment-specific product recommendations and targeted promotional campaigns based on purchasing preferences to encourage repeat purchases and improve customer engagement.
+To achieve this objective, I decided to use the **RFM (Recency, Frequency, and Monetary) framework** to analyze customer purchasing behavior.
 
-### Insight 5: Customer Distribution and Inactive Customers by Country
+The analysis focused on three main aspects:
 
-- **Insight:** The United Kingdom has the highest customer count across all segments compared with other countries. However, a significant proportion of its customers belong to the Inactive segment, indicating an opportunity for customer reactivation.
-- **Business Recommendation:** Prioritize re-engagement campaigns for Inactive customers in the United Kingdom through personalized offers and targeted marketing. Additionally, explore opportunities to expand the customer base and improve engagement in other countries.
+- How recently a customer made their last purchase.
+- How frequently a customer made purchases.
+- How much revenue a customer generated.
 
-### Insight 6: Customer Segment Trends Over Time
+Based on these three metrics, my task was to divide customers into six segments: Premium, Loyal, Potential, Regular, At Risk, and Inactive.
 
-- **Insight:** The Potential and Regular customer segments showed consistent growth over the three-year period, while the Inactive segment experienced considerable fluctuations. This highlights opportunities to improve customer engagement and convert Potential and Regular customers into higher-value segments.
-- **Business Recommendation:** Implement targeted marketing campaigns, personalized offers, and loyalty programs to reactivate Inactive customers, encourage repeat purchases, and convert Potential and Regular customers into Loyal and Premium segments.
+I also defined key performance indicators such as Total Revenue, Total Customers, Average Order Value, Average Customer Spend, Premium Customers, At-Risk Customers, and Potential-to-Loyal Opportunity Percentage.
 
+These KPIs helped me understand the customer base, compare the performance of different segments, and identify opportunities for customer retention and growth.
+
+## 3. Action
+
+To complete this project, I followed a structured data analytics workflow using Python, Pandas, NumPy, Jupyter Notebook, Power BI, and DAX.
+
+### 3.1 Data Source
+
+First, I downloaded the customer transaction dataset from Kaggle.
+
+The dataset contained more than 10,000 transaction records, including customer IDs, product details, invoice dates, quantities, prices, and country information.
+
+I used Python in Jupyter Notebook to handle and prepare the dataset for further analysis.
+
+### 3.2 Data Cleaning
+
+Before starting the analysis, I performed data cleaning in Python to make sure the dataset was suitable for analysis.
+
+The main activities included:
+
+- Checked the data types of all columns and converted the InvoiceDate column from string to datetime format.
+- Identified missing values in the Customer ID column and handled them.
+- Checked for duplicate records.
+- Removed invalid transactions where Quantity or Price values were zero or negative.
+- Created a cleaned dataset for further analysis.
+
+### 3.3 Data Transformation
+
+After cleaning the data, I created a new Revenue column by multiplying Quantity by Unit Price.
+
+**Revenue = Quantity × Unit Price**
+
+Then, I prepared the data at the customer level because my objective was to analyze individual customer purchasing behavior rather than just transaction-level performance.
+
+For this, I calculated three important RFM metrics:
+
+- **Recency:** It measures how recently a customer made a purchase. I calculated the number of days since each customer's last purchase.
+- **Frequency:** It measures how frequently a customer made purchases. I calculated the total number of purchases made by each customer.
+- **Monetary:** It measures how much revenue a customer generated. I calculated the total revenue contributed by each customer.
+
+These three metrics helped me understand customer engagement, purchase frequency, and spending behavior.
+
+### 3.4 RFM Scoring & Customer Segmentation
+
+After calculating Recency, Frequency, and Monetary values for each customer, the next step was to assign scores to these three metrics.
+
+The reason for doing this was that RFM values alone were not enough to classify customers into meaningful groups. I needed a scoring system to compare customers based on their purchasing behavior.
+
+I assigned scores from **1 to 5** to each RFM metric based on predefined thresholds.
+
+- **Recency:** Customers who had purchased more recently received higher scores, while customers who had not purchased for a longer period received lower scores.
+- **Frequency:** Customers who made purchases more frequently received higher scores, while customers with fewer purchases received lower scores.
+- **Monetary:** Customers who generated more revenue received higher scores, while customers who generated less revenue received lower scores.
+
+After assigning these scores, I combined the RFM scores and applied rule-based segmentation logic to classify customers into six different segments.
+
+The six segments were:
+
+**1. Premium Customers**
+
+These are customers who have high scores across Recency, Frequency, and Monetary. They purchase recently, purchase frequently, and generate high revenue. These customers are valuable to the business and should be retained through loyalty programs and exclusive benefits.
+
+**2. Loyal Customers**
+
+These customers have a high purchase frequency and have also purchased relatively recently. They regularly purchase from the business and represent an opportunity for long-term customer relationships.
+
+**3. Potential Customers**
+
+These customers have made purchases recently but have comparatively lower purchase frequency. They have the potential to become regular or loyal customers if the business encourages them to purchase more frequently.
+
+**4. At-Risk Customers**
+
+These customers previously had high purchase frequency and generated good revenue, but they have not purchased recently. They may be losing interest in the business, so they require targeted retention and win-back campaigns.
+
+**5. Inactive Customers**
+
+These customers have low Recency, Frequency, and Monetary scores. This means they have not purchased for a long time, have made fewer purchases, and have contributed comparatively less revenue.
+
+**6. Regular Customers**
+
+These customers do not fall into the other five defined segments. They represent the remaining customer base and can be further evaluated for opportunities to improve engagement and purchasing frequency.
+
+This segmentation helped me move beyond simply counting customers and understand the value, engagement, and retention requirements of different customer groups.
+
+### 3.5 Power BI Integration
+
+After completing the data preparation and customer segmentation in Python, I imported the required customer transaction and segmentation data into Power BI for dashboard development.
+
+### 3.6 DAX Measures and KPI Development
+
+After importing the data, I created DAX measures to calculate the key performance indicators required for the dashboard.
+
+These included:
+
+- Total Revenue
+- Total Customers
+- Average Order Value
+- Average Customer Spend
+- Premium Customers
+- At-Risk Customers
+- Potential-to-Loyal Opportunity Percentage
+
+These measures helped present the overall customer performance and compare different customer segments.
+
+### 3.7 Dashboard Development
+
+After completing the analysis, I developed an interactive Customer Segmentation Analysis dashboard in Power BI to present the findings visually.
+
+I used KPI cards to display Total Revenue, Total Customers, Average Order Value, Average Customer Spend, Premium Customers, At-Risk Customers, and Potential-to-Loyal Opportunity Percentage.
+
+For customer distribution, I used a stacked column chart to compare the number of customers across different segments.
+
+I used bar charts to analyze customer and product-related performance and understand product preferences across different customer segments.
+
+I also used a detailed table to display customer-level segmentation information, which helped identify individual customers belonging to different segments.
+
+To understand how customer segments changed over time, I used an area chart to track segment trends across the three-year period.
+
+Additionally, I added interactive slicers for Month, Year, and Customer Segment so users could filter the dashboard and explore customer behavior across different time periods and segments.
+
+## 4. Result
+
+After completing the RFM analysis and Power BI dashboard, I identified several important patterns in customer purchasing behavior.
+
+First, I found that the **Inactive segment accounted for 42.82% of the total customer base**, making it the largest customer segment. This indicated a significant opportunity to reactivate customers who had not purchased for a long time.
+
+On the other hand, the Premium segment consisted of only **113 customers**, highlighting the importance of retaining high-value customers.
+
+I also identified **6 At-Risk customers** with monetary values ranging from approximately ₹14K to ₹55K. These customers had generated significant revenue in the past but had not purchased recently, making them important candidates for targeted retention campaigns.
+
+From a revenue perspective, the Premium segment generated approximately **₹5.9M in revenue**, despite having only 113 customers. This showed that a relatively small group of high-value customers was contributing significantly to overall revenue.
+
+I also analyzed product preferences across customer segments and found differences in purchasing behavior. For example, Regular, Potential, and Inactive customers primarily purchased the White Hanging Heart T-Light Holder, whereas Premium customers showed a preference for the Regency Cakestand 3 Tier.
+
+From a geographical perspective, the United Kingdom had the highest customer count across all segments. However, a significant proportion of its customers belonged to the Inactive segment, indicating an opportunity for customer reactivation.
+
+Additionally, the Potential and Regular customer segments showed consistent growth over the three-year period, while the Inactive segment experienced considerable fluctuations.
+
+Based on these findings, I recommended implementing targeted reactivation campaigns for Inactive customers, personalized win-back offers for At-Risk customers, and exclusive loyalty benefits for Premium customers.
+
+I also recommended using segment-specific product recommendations and promotional campaigns to encourage repeat purchases and convert Potential and Regular customers into higher-value segments.
 ---
 
 ## 6. Business Impact
